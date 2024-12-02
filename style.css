@@ -1,0 +1,50 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    background: #cee7ff;
+    overflow: hidden;
+}
+
+.game-container {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.balloon {
+    position: absolute;
+    width: 60px;
+    height: 80px;
+    background-color: red;
+    border-radius: 50% 50% 50% 50%/60% 60%;
+}
+
+#score {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 30px;
+    color: black;
+}
+
+#game-over {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    font-size: 40px;
+    color: black;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+#reset-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: darkcyan;
+    color: black;
+    font-size: 25px;
+    cursor: pointer;
+    border-radius: 15px;
+}
