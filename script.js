@@ -48,6 +48,6 @@ function RestartGame() {
 }
 
 function StartGame() {
-    setInterval(CreateBalloon, 1000)
+    setInterval(CreateBalloon, 300)
 }
 StartGame()
