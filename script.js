@@ -1,8 +1,9 @@
 const GameContainer = document.getElementById("game-container")
 const ScoreDisplay = document.getElementById("score")
 const GameOverDisplay = document.getElementById("game-over")
-let score = 0
-let GameActive = true
+let score = 0;
+let GameActive = true;
+let BalloonInterval;
 
 function CreateBalloon() {
     if (!GameActive) return;
@@ -11,9 +12,16 @@ function CreateBalloon() {
     Balloon.style.left = Math.random() * 90 + "%"
     Balloon.style.bottom = "-100px"
     Balloon.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`
-    GameContainer.appendChild(Balloon)
+    GameContainer.appendChild(Balloon);
+
     let MoveInterval = setInterval(() => {
-        let CurrentBottom = parseInt(window.getComputedStyle(Balloon).bottom)
+        if(!GameActive){
+            clearInterval(MoveInterval)
+            Balloon.remove()
+            return
+        }
+        let CurrentBottom = parseInt(window.getComputedStyle(Balloon).bottom);
+
         if (CurrentBottom >= window.innerHeight) {
             clearInterval(MoveInterval)
             GameContainer.removeChild(Balloon)
@@ -33,8 +41,9 @@ function CreateBalloon() {
 }
 
 function GameOver() {
-    GameActive = false
-    GameOverDisplay.style.display = "block"
+    GameActive = false;
+    GameOverDisplay.style.display = "block";
+    clearInterval(BalloonInterval);
 }
 
 function RestartGame() {
@@ -48,6 +57,7 @@ function RestartGame() {
 }
 
 function StartGame() {
-    setInterval(CreateBalloon, 300)
+    BalloonInterval = setInterval(CreateBalloon,300)
+
 }
 StartGame()
