@@ -1,9 +1,13 @@
 const GameContainer = document.getElementById("game-container")
 const ScoreDisplay = document.getElementById("score")
 const GameOverDisplay = document.getElementById("game-over")
+const LevelDisplay = document.getElementById("level-id")
 let score = 0;
 let GameActive = true;
 let BalloonInterval;
+let BalloonSpeed = 2
+let SpawnRate = 1000
+let Level = 1
 
 function CreateBalloon() {
     if (!GameActive) return;
@@ -15,7 +19,7 @@ function CreateBalloon() {
     GameContainer.appendChild(Balloon);
 
     let MoveInterval = setInterval(() => {
-        if(!GameActive){
+        if (!GameActive) {
             clearInterval(MoveInterval)
             Balloon.remove()
             return
@@ -29,7 +33,7 @@ function CreateBalloon() {
                 GameOver()
             }
         } else {
-            Balloon.style.bottom = CurrentBottom + 2 + "px"
+            Balloon.style.bottom = CurrentBottom + BalloonSpeed + "px"
         }
     }, 20)
     Balloon.addEventListener("click", () => {
@@ -37,7 +41,19 @@ function CreateBalloon() {
         ScoreDisplay.textContent = `SCORE: ${score}`
         Balloon.remove()
         clearInterval(MoveInterval)
+        if (score % 10 === 0) {
+            LevelUp()
+        }
     })
+}
+
+function LevelUp() {
+    Level++;
+    LevelDisplay.textContent = `Level: ${Level}`
+    BalloonSpeed += 1
+    SpawnRate -= 100
+    clearInterval(BalloonInterval)
+    BalloonInterval = setInterval(CreateBalloon, Math.max(SpawnRate, 300))
 }
 
 function GameOver() {
@@ -48,16 +64,19 @@ function GameOver() {
 
 function RestartGame() {
     score = 0
+    Level = 1
+    BalloonSpeed = 2
+    SpawnRate = 1000
     GameActive = true
     ScoreDisplay.textContent = "Score: 0"
     GameOverDisplay.style.display = "none"
+    LevelDisplay.textContent = "Level: 1"
     document.querySelectorAll(".balloon").forEach((Balloon) => Balloon.remove())
 
     StartGame()
 }
 
 function StartGame() {
-    BalloonInterval = setInterval(CreateBalloon,300)
-
+    BalloonInterval = setInterval(CreateBalloon, 700)
 }
 StartGame()
