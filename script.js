@@ -2,6 +2,8 @@ const GameContainer = document.getElementById("game-container")
 const ScoreDisplay = document.getElementById("score")
 const GameOverDisplay = document.getElementById("game-over")
 const LevelDisplay = document.getElementById("level-id")
+const PopSound = document.getElementById("pop-sound")
+const EndSound = document.getElementById("end-sound")
 let score = 0;
 let GameActive = true;
 let BalloonInterval;
@@ -40,6 +42,8 @@ function CreateBalloon() {
         score++
         ScoreDisplay.textContent = `SCORE: ${score}`
         Balloon.remove()
+        PopSound.currentTime = 0
+        PopSound.play()
         clearInterval(MoveInterval)
         if (score % 10 === 0) {
             LevelUp()
@@ -60,6 +64,8 @@ function GameOver() {
     GameActive = false;
     GameOverDisplay.style.display = "block";
     clearInterval(BalloonInterval);
+    EndSound.currentTime = 0
+    EndSound.play()
 }
 
 function RestartGame() {
